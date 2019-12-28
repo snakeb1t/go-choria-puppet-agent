@@ -3,6 +3,7 @@ package agent
 import (
 	"context"
 	"github.com/choria-io/go-choria/choria"
+	"github.com/choria-io/go-choria/plugin"
 	"github.com/choria-io/go-choria/server"
 	"github.com/choria-io/go-choria/server/agents"
 	"github.com/choria-io/mcorpc-agent-provider/mcorpc"
@@ -93,4 +94,10 @@ func runOnceAction(ctx context.Context, req *mcorpc.Request, reply *mcorpc.Reply
 		return
 	}
 	reply.Data = resp
+}
+
+// ChoriaPlugin produces the Choria pluggable plugin it uses the metadata
+// to dynamically answer questions of name and version
+func ChoriaPlugin() plugin.Pluggable {
+	return mcorpc.NewChoriaAgentPlugin(metadata, New)
 }
