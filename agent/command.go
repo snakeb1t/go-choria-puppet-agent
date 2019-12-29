@@ -11,9 +11,10 @@ import (
 )
 
 const (
-	PuppetCommand = "/opt/puppetlabs/puppet/bin/puppet"
+	PuppetCommand = "/opt/puppetlabs/bin/puppet"
 	PuppetAgentSubcommand = "agent"
 	EnvironmentFile = "/etc/environment"
+	PathEnv = "PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/puppetlabs/bin"
 )
 
 func runAgentOnce(req *RunonceRequest) (*RunonceResponse, error) {
@@ -70,5 +71,6 @@ func parseEnvironmentFile() ([]string, error) {
 	if err := scanner.Err(); err != nil {
 		return nil, err
 	}
+	envVars = append(envVars, PathEnv)
 	return envVars, nil
 }
