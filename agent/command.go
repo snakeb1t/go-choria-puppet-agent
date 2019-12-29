@@ -30,7 +30,10 @@ func runAgentOnce(req *RunonceRequest) (*RunonceResponse, error) {
 	start := time.Now()
 	err = cmd.Run()
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to execute puppet agent")
+		return &RunonceResponse{
+			Summary:    outErrBuf.String(),
+			InitiatedAt: start.String(),
+		}, errors.Wrap(err, "failed to execute puppet agent")
 	}
 	return &RunonceResponse{
 		Summary:     outErrBuf.String(),

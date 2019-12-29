@@ -2,6 +2,7 @@ package agent
 
 import (
 	"context"
+	"fmt"
 	"github.com/choria-io/go-choria/choria"
 	"github.com/choria-io/go-choria/plugin"
 	"github.com/choria-io/go-choria/server"
@@ -90,7 +91,7 @@ func runOnceAction(ctx context.Context, req *mcorpc.Request, reply *mcorpc.Reply
 	resp, err := runAgentOnce(i)
 	if err != nil {
 		reply.Statuscode = mcorpc.Aborted
-		reply.Statusmsg = err.Error()
+		reply.Statusmsg = fmt.Sprintf("err: %s, additional data: %s", err.Error(), resp.Summary)
 		return
 	}
 	reply.Data = resp
